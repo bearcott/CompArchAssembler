@@ -6,9 +6,6 @@
 
 We have created a github repository that has all of the mips source code. We have all of the knowledge ready to get started. The research phase shall begin *immediately* and will be finished in 3 weeks time.
 
-Status of the project, what parts of the project have been done and what parts need to be done. It would be helpful if this section contains the phases (or milestones) of the project, e.g. investigation, design, test, document etc... and the planned completion date for each phase. Do not worry if the project is not on time! This is an opportunity to revisit  the project and adjust the projected completion dates for the phases based on what have been completed.
-
-
 ###2. What is the role of each member? And where you are for the tasks that were assigned to you?
 
 The roles have been distributed to primarily but not exclusively the following positions:
