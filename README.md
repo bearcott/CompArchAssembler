@@ -2,7 +2,7 @@
 
 *Benny Yan, Alvin Nwachuchukwu, Sai Gatram, Xunde Wang*
 
-Advanced Project Details will be located ![here on the Google doc](https://docs.google.com/document/d/14C3ObCxACHOkzzUVnUQVJ0g9p5KEdeVf9oP8K0WGXJ4/edit)
+Advanced Project Details will be located [here on the Google doc](https://docs.google.com/document/d/14C3ObCxACHOkzzUVnUQVJ0g9p5KEdeVf9oP8K0WGXJ4/edit)
 
 ###1. Where is the project?
 
