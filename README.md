@@ -2,6 +2,8 @@
 
 *Benny Yan, Alvin Nwachuchukwu, Sai Gatram, Xunde Wang*
 
+Advanced Project Details will be located ![here on the Google doc](https://docs.google.com/document/d/14C3ObCxACHOkzzUVnUQVJ0g9p5KEdeVf9oP8K0WGXJ4/edit)
+
 ###1. Where is the project?
 
 We have created a github repository that has all of the mips source code. We have all of the knowledge ready to get started. The research phase shall begin *immediately* and will be finished in 3 weeks time.
