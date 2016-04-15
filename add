@@ -39,7 +39,7 @@ Add:
 	
 Minus:
 	la	$a1, minus
-	bne	$a0, $a1, And
+	bne	$t4, $t0, And
 			
 And:
 
