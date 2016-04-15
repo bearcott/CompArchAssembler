@@ -4,7 +4,7 @@
 
 Thanks for what Sai has done!
 
-Maybe I was wrong, but my thought is to open a file and read one line as a string until the end of newline character. Then use "blank" as seperator to parse the line as several token and ignore everything after #. After this step, we should convert this line into binary code and write into output file. Then loop until meets the EOF.  -xd
+Maybe I was wrong, but my thought is to open a file and read one line as a string until the end of newline character. Then use "blank" and "," as seperator to parse the line as several token and ignore everything after #. After this step, we should convert this line into binary code and write into output file. Then loop until meets the EOF.  -xd
 
 
 
