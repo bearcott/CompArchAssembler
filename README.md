@@ -26,7 +26,9 @@ The roles have been distributed to primarily but not exclusively the following p
   - we will achieve this by going to class and learning.
    - we will pass this class
   - we will do research a home
- ###4. Actual start of project.
+  
+###4. Actual start of project.
+
 Things that need to be done: 
   1) parse the contents of file
   2) Convert the instructions into binary
