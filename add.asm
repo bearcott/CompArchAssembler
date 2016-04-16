@@ -1,6 +1,6 @@
 .data
 add:	.asciiz	"add"
-minus:	.asciiz	"minus"
+subtract:.asciiz "subtract"
 s0:	.asciiz	"$s0"
 s1:	.asciiz	"$s1"
 s2:	.asciiz	"$s2"
@@ -37,8 +37,8 @@ Add:
 	syscall	
 	jal	end	
 	
-Minus:
-	la	$a1, minus
+Subtract:
+	la	$a1, subtract
 	bne	$t4, $t0, And
 			
 And:
