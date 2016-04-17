@@ -2,12 +2,6 @@
 
 *Benny Yan, Alvin Nwachuchukwu, Sai Gatram, Xunde Wang*
 
-Thanks for what Sai has done!
-
-Maybe I was wrong, but my thought is to open a file and read one line as a string until the end of newline character. Then use "blank" and "," as delimiter to parse the line as several token and ignore everything after #. After this step, we should convert this line into binary code and write into output file. Then loop until meets the EOF.  -xd
-
-
-
 Advanced Project Details will be located [here on the Google doc](https://docs.google.com/document/d/14C3ObCxACHOkzzUVnUQVJ0g9p5KEdeVf9oP8K0WGXJ4/edit)
 
 ###1. Where is the project?
@@ -24,7 +18,7 @@ The roles have been distributed to primarily but not exclusively the following p
 
 - **Sai** *Code Interpretation lead* He will be in charge of interpreting the the assembly language and writing methods to convert it to machine code.
 
-- **Xunde** *Media and debugging lead* He will be in charge of making sure the code will be in ship shape as well as making the video production. 
+- **Xunde** *Media and debugging lead* He will be in charge of making sure the code will be in ship shape as well as making the video production.
 
 ###3. When will be next major milestone and how does the team plan to reach there?
 
@@ -32,13 +26,11 @@ The roles have been distributed to primarily but not exclusively the following p
   - we will achieve this by going to class and learning.
    - we will pass this class
   - we will do research a home
-  
+
 ###4. Actual start of project.
 
-Things that need to be done: 
+Things that need to be done:
   1) parse the contents of file
   2) Convert the instructions into binary
 Things that are done:
-  1) .asm can be read 
-
-
+  1) .asm can be read
