@@ -1,0 +1,15 @@
+
+accepted
+You need to put it together in binary, not in hex.
+
+The little numbers in the image tell you the amount of bits of every part.
+
+add = op code of 0, 000000 in bin
+$s3 = 19 in decimal, 13 in hex, 10011 in bin
+$s5 = 21 in decimal, 15 in hex, 10101 in bin
+$s0 = 16 in decimal, 10 in hex, 10000 in bin
+shamt = 0, 00000 in bin
+funct = 20 from add, 10100 in bin
+Then put everything together and convert to hexadecimal:
+
+0b00000010011101011000000000100000 = 0x02758020
