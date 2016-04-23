@@ -26,28 +26,29 @@ Store: # will store teh contents of the file in $t0
    	add $a0, $t0, $zero  # load desired value into argument register $a0, using pseudo-op
     	syscall
     	
-   	#THIS IS IS LB LOOP SETUP
-    	lb $t1 , 0($t0)
+LbLoop:
+	li $t2, 70 # t0 is a constant THAT WE CAN CHANGE FOR THE AMOUNT OF CHARAACTERS 
+	li $t3, 0 # t1 is our counter (i)
+loop:
+	la $t0, buffer 
+	beq $t3, $t2, end # if t3 == 10 we are done
+	addu $t0, $t0, $t3
+    	lb $t1 , ($t0)
 	li  $v0, 11           # service 4 is print string
 	add $a0, $t1, $zero  # load desired value into argument register $a0, using pseudo-op
 	syscall
-	
-	lb $t1 , 1($t0)
-	li  $v0, 11           # service 4 is print string
-	add $a0, $t1, $zero  # load desired value into argument register $a0, using pseudo-op
-	syscall
-	
-	lb $t1 , 2($t0)
-	li  $v0, 11           # service 4 is print string
-	add $a0, $t1, $zero  # load desired value into argument register $a0, using pseudo-op
-	syscall
-	
+	addi $t3, $t3, 1 # add 1 to t3 the counter
+	j loop # jump back to the top
+
 	
 # Close the file
-
-li   $v0, 16       # system call for close file
-move $a0, $s6      # file descriptor to close
-syscall            # close file
+end:
+	li   $v0, 16       # system call for close file
+	move $a0, $s6      # file descriptor to close
+	syscall            # close file
 		
+
+	
+
 
 	
