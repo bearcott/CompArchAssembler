@@ -1,12 +1,47 @@
+#TODO: fix clumsy use of $t2 register: you have to reset it every time u use it
 .data
 	fileName: .asciiz "test.asm" # filename for input
 	buffer: .space 1024
 	tempString: .space 20
 
+# binary values are NOT ACCURATE, need to go to mips sheet and correct them.
+	ADD_OP: .asciiz "add"
+	ADD_BIN: .asciiz "11141"
+
+	S0_OP: .asciiz "$s0"
+	S0_BIN: .asciiz "01030"
+
+	S1_OP: .asciiz "$s1"
+	S1_BIN: .asciiz "01500"
+
+	S2_OP: .asciiz "$s2"
+	S2_BIN: .asciiz "01510"
+
 .macro printString(%arg)
-li $v0, 4 # service 4 is print string
-add $a0, %arg, $zero  # load desired value into argument register $a0, using pseudo-op
-syscall
+	li $v0, 4 # service 4 is print string
+	add $a0, %arg, $zero  # load desired value into argument register $a0, using pseudo-op
+	syscall
+	printNewLine()
+.end_macro
+
+.macro printNewLine
+	addi $a0, $0, 0xA #ascii code for LF, if you have any trouble try 0xD for CR.
+	addi $v0, $0, 0xB #syscall 11 prints the lower 8 bits of $a0 as an ascii character.
+	syscall
+.end_macro
+
+.macro printChar(%arg)
+	li $v0, 11 # service 11 is print char
+	add $a0, %arg, $zero  # load desired value into argument register $a0, using pseudo-op
+	syscall
+	printNewLine()
+.end_macro
+
+.macro handleComparison(%string, %binary)
+	la $t2, tempString
+	la $t3, %string
+	la $t4, %binary
+	jal comparePhraseLoop
 .end_macro
 
 .text
@@ -27,8 +62,12 @@ readFile: #read from file
 
 loadByteLoop:
 	la $t0, buffer # load buffer address in $t0
-	li $t1, 0 # temp char
-	la $t2, tempString
+	li $t1, 0 # reserved for temp chars
+	la $t2, tempString # tempString to store phrase every time a delimiter is met
+	li $t3, 0 # reserved for holding address of temp phrases
+	li $t4, 0 # reserved for holding address of temp binary output
+	li $t5, 0 # reserved for second temp char
+
 	li $s0, ' ' # load space char
 	li $s1, ',' # load space char
 	li $s2, '\n' # load newline char
@@ -43,36 +82,71 @@ byteLoop:
 	beq $t1, $s2, handleNewLine # if char == newline go to handler
 	beq $t1, $s1, handleComma # if char == comma go to handler
 	beq $t1, $s0, handleSpace # if char == space go to handler
-	sb $t1, ($t2) # store current byte into string
 
-	# li $v0,11 # service 11 is print char
-	# add $a0, $t1, $zero  # load desired value into argument register $a0, using pseudo-op
-	# syscall #print current character
-
+	sb $t1, ($t2) # store current byte into tempstring
 	addi $t0, $t0, 1 # increment byte from buffer
 	addi $t2, $t2, 1 # increment tempstring byte
 	j byteLoop # jump back to the top
 
-handleSpace:
+
+comparePhraseLoop: #handle each character
+	lb $t1, ($t2) # get character from temp phrase
+	lb $t5, ($t3) # get character from comparing phrase
+	bne $t1, $t5, comparePhraseElse # exit if char != compared char
+	beq $t1, $s3, comparePhraseDone # exit if char == null, phrase is complete
+	# printChar($t5)
+	# printChar($t1)
+	addi $t2, $t2, 1 # increment through the phrase
+	addi $t3, $t3, 1 # increment hardcoded phrase
+	j comparePhraseLoop
+comparePhraseElse:
+	jr $ra
+comparePhraseDone:
+	#perform ouput operation here
+	printString($t4)
+	jr $ra
+
+emptyPhraseLoop:
+	lb $t1, ($t2) # get character from temp phrase
+	sb $s3, ($t2) # set char to null for next iteration, this way the phase will be empty
+	beq $t1, $s3, emptyPhraseDone # exit if char == null, phrase is complete
+	addi $t2, $t2, 1 # increment through the phrase
+	j emptyPhraseLoop
+emptyPhraseDone:
+	jr $ra
+
+handleSpace: # op codes go here
 	addi $t0, $t0, 1 # increment byte from buffer to skip the space
-	la $t2, tempString # get the current op and reset the counter
-	# handleSpaceLoop:
-	# 	beq $t2,
 
-	printString($t2)
+	#brute force & hardcoded my nigga
+	#TODO: not use macro for something so bullshit
+	handleComparison(ADD_OP,ADD_BIN)
 
+	la $t2, tempString # reset the counter and get the phrase
+	jal emptyPhraseLoop
+	la $t2, tempString # reset the counter again
 	j byteLoop
 
-handleComma:
+
+handleComma: # arguments go here
 	addi $t0, $t0, 1 # increment byte from buffer to skip the comma
-	la $t2, tempString # get the current op and reset the counter
 	printString($t2)
+	handleComparison(S0_OP,S0_BIN)
+	handleComparison(S1_OP,S1_BIN)
+	handleComparison(S2_OP,S2_BIN)
+
+	la $t2, tempString # reset the counter and get the phrase
+	jal emptyPhraseLoop
+	la $t2, tempString # reset the counter again
 	j byteLoop
 
-handleNewLine:
+handleNewLine: # new instructions
 	addi $t0, $t0, 1 # increment byte from buffer to skip the newline
-	la $t2, tempString # get the current op and reset the counter
 	printString($t2)
+
+	la $t2, tempString # reset the counter and get the phrase
+	jal emptyPhraseLoop
+	la $t2, tempString # reset the counter again
 	j byteLoop
 
 

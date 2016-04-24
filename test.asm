@@ -1,2 +1,2 @@
-addi $s1,$s1,1
-add $s1,$s1,$s2
+addi $s1,$s2,3
+add $s1,$s2,$s3
