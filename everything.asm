@@ -1,9 +1,6 @@
 .data
 	fileName: .asciiz "test.asm" # filename for input
 	buffer: .space 1024
-	myString: .word 268501009
-	register: .space 4
-	string1:  .space 20 # store the instruction "before the space"
 
 .text
 OpenFile: #open a file for writing
@@ -22,53 +19,27 @@ ReadFile: #read from file
 	syscall # read from file
 
 Store: # will store the contents of the file in $t0
-	la $t0, buffer # load buffer to $t0
+	la $t0, buffer # load buffer address to $t0
 	li $v0, 4 # service 4 is print string
 	add $a0, $t0, $zero  # load desired value into argument register $a0, using pseudo-op
 	syscall
 
-LbLoop:
-	li $t2, 70 # t2 is a constant THAT WE CAN CHANGE FOR THE AMOUNT OF CHARAACTERS
-	li $t3, 0 # t3 is our counter (i)
-	li $s0, ' ' # load $s0 with "space"
-	li $s1, ',' # load $s1 with ","
-	li $s2,  '\n' # load $s2 with newline character
+LoadByteLoop:
+	li $t1, 0 # temp char
+	li $s0, ' ' # load space char
+	li $s2, '\n' # load newline char
+	li $s3, '\0' # null char (end of file)
 
 loop:
-	la $t0, buffer
-	beq $t3, $t2, end # if t3 == 70 we are done
-	addu $t0, $t0, $t3 # increment buffer by counter
-	lb $t1, ($t0) # load first byte of buffer + counter
-	beq $t1, $s0, end # stop read if meet a "space"
+	lb $t1, ($t0) # load current incremented byte from buffer
+	beq $t1, $s3, end # exit if char == end of file
 	li  $v0, 11 # service 11 is print char
 	add $a0, $t1, $zero  # load desired value into argument register $a0, using pseudo-op
 	syscall #print current character
-	addi $t3, $t3, 1 # add 1 to t3 the counter
+	addi $t0, $t0, 1 # increment byte from buffer
 	j loop # jump back to the top
 
-
-space: # THIS IS WHERE PARSING IS DONE FOR INSTRUCTIONS
-	la $s3, string1
-
-	lb $t7 , -4($t0)
-	lb $t6 , -3($t0)
-	lb $t5 , -2($t0)
-	lb $t4 , -1($t0)
-
-	sb $t7, 0($s3)
-	sb $t6, 1($s3)
-	sb $t5, 2($s3)
-	sb $t4, 3($s3)
-
-	li  $v0, 4     # service 1 is print integer
-    	add $a0, $s3, $zero  # load desired value into argument register $a0, using pseudo-op
-    	syscall
-
-   	addi $t3, $t3, 1 # add 1 to t3 the counter
-   	j loop
-
-# Close the file
-end:
+end: #Close the file
 	li $v0, 16 # system call for close file
 	move $a0, $s6 # file descriptor to close
 	syscall # close file
