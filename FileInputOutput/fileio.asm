@@ -30,6 +30,8 @@ LbLoop:
 	li $t2, 70 # t0 is a constant THAT WE CAN CHANGE FOR THE AMOUNT OF CHARAACTERS 
 	li $t3, 0 # t1 is our counter (i)
 	li $s0, ' ' # load $s0 with "space"
+	li $s1, ',' # load $s1 with ","
+	li $s2,  '\n' # load $s2 with newline character
 loop:
 	la $t0, buffer 
 	beq $t3, $t2, end # if t3 == 70 we are done
