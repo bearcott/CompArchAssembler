@@ -2,7 +2,6 @@
 	fileName: .asciiz "test.asm" # filename for input
 	buffer: .space 1024
 	myString: .word 268501009
-
 	register: .space 4
 	string1:  .space 20 # store the instruction "before the space"
 
@@ -19,7 +18,7 @@ ReadFile: #read from file
 	li $v0, 14 # system call for read from file
 	move $a0, $s6 # use file descriptor
 	la $a1, buffer # address of buffer to which to write to
-	la $a2, buffer # hardcoded buffer length
+	li $a2, 1024 # hardcoded buffer length
 	syscall # read from file
 
 Store: # will store the contents of the file in $t0
