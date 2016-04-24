@@ -1,9 +1,9 @@
 .data
-add:	.asciiz	"add"
-subtract:.asciiz "subtract"
-s0:	.asciiz	"$s0"
-s1:	.asciiz	"$s1"
-s2:	.asciiz	"$s2"
+add:  .asciiz "add"
+subtract: .asciiz "subtract"
+s0: .asciiz "$s0"
+s1: .asciiz "$s1"
+s2: .asciiz "$s2"
 prompt1:	.asciiz	"It is add function:\n"
 	.globl	main
 	.text
@@ -81,4 +81,4 @@ exit:
 
 end:
 	li	$v0, 10		# terminate program
-	syscall			# call operating system to perform operation	
+	syscall			# call operating system to perform operation
