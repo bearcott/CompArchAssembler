@@ -3,6 +3,7 @@ fin: .asciiz "test.asm"      # filename for input
 buffer: .space 1024
 myString: .word 268501009
 register: .space 4
+string1:  .space 8
 
 .text
 #open a file for writing
@@ -26,6 +27,19 @@ Store: # will store the contents of the file in $t0
    	add $a0, $t0, $zero  # load desired value into argument register $a0, using pseudo-op
     	syscall
     	
+concatenation:	# concatenation 'a' + 'd' + 'd' into "add"
+	li $s3, 'a'
+	li $s4, 'd'
+	li $s5, 'd'
+	la $s6, string1
+	sb $s3, ($s6)
+	sb $s4, 1($s6)
+	sb $s5, 2($s6)
+	
+	li $v0, 4		# system call code for print string
+	add $a0, $s6, $zero	
+	syscall
+	
 LbLoop:
 	li $t2, 70 # t0 is a constant THAT WE CAN CHANGE FOR THE AMOUNT OF CHARAACTERS 
 	li $t3, 0 # t1 is our counter (i)
