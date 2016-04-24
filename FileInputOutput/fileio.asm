@@ -20,7 +20,7 @@ register: .space 4
 	li   $a2, 1024     # hardcoded buffer length
 	syscall            # read from file
 
-Store: # will store teh contents of the file in $t0
+Store: # will store the contents of the file in $t0
 	la $t0, buffer 
 	li  $v0, 4           # service 4 is print string
    	add $a0, $t0, $zero  # load desired value into argument register $a0, using pseudo-op
@@ -29,11 +29,13 @@ Store: # will store teh contents of the file in $t0
 LbLoop:
 	li $t2, 70 # t0 is a constant THAT WE CAN CHANGE FOR THE AMOUNT OF CHARAACTERS 
 	li $t3, 0 # t1 is our counter (i)
+	li $s0, ' ' # load $s0 with "space"
 loop:
 	la $t0, buffer 
-	beq $t3, $t2, end # if t3 == 10 we are done
+	beq $t3, $t2, end # if t3 == 70 we are done
 	addu $t0, $t0, $t3
     	lb $t1 , ($t0)
+    	beq $t1, $s0, end # stop read if meet a "space"
 	li  $v0, 11           # service 4 is print string
 	add $a0, $t1, $zero  # load desired value into argument register $a0, using pseudo-op
 	syscall
