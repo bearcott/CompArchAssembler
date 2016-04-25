@@ -68,6 +68,30 @@
 	S2_OP: .asciiz "$s2"
 	S2_BIN: .asciiz "01510"
 	
+	S0_OP: .asciiz "$s0"
+	S0_BIN: .asciiz "010000"
+
+	S1_OP: .asciiz "$s1"
+	S1_BIN: .asciiz "010001"
+
+	S2_OP: .asciiz "$s2"
+	S2_BIN: .asciiz "010010"
+
+	S3_OP: .asciiz "$s3"
+	S3_BIN: .asciiz "010011"
+
+	S4_OP: .asciiz "$s4"
+	S4_BIN: .asciiz "010100"
+
+	S5_OP: .asciiz "$s5"
+	S5_BIN: .asciiz "010101"
+
+	S6_OP: .asciiz "$s6"
+	S6_BIN: .asciiz "010110"
+
+	S7_OP: .asciiz "$s7"
+	S7_BIN: .asciiz "010111"
+	
 	
 .macro printString(%arg)
 	li $v0, 4 # service 4 is print string
