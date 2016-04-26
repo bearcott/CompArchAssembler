@@ -16,6 +16,87 @@
 
 	S2_OP: .asciiz "$s2"
 	S2_BIN: .asciiz "01510"
+	
+	ZERO_OP: .asciiz "$zero"
+	ZERO_BIN: .asciiz "000000"
+
+	AT_OP: .asciiz "$at"
+	AT_BIN: .asciiz "000001"
+
+	V0_OP: .asciiz "$v0"
+	V0_BIN: .asciiz "000010"
+
+	V1_OP: .asciiz "$v1"
+	V1_BIN: .asciiz "000011"
+
+	A0_OP: .asciiz "$a0"
+	A0_BIN: .asciiz "000100"
+
+	A1_OP: .asciiz "$a1"
+	A1_BIN: .asciiz "000101"
+
+	A2_OP: .asciiz "$a2"
+	A2_BIN: .asciiz "000110"
+
+	A3_OP: .asciiz "$a3"
+	A3_BIN: .asciiz "000111"
+
+	T0_OP: .asciiz "$t0"
+	T0_BIN: .asciiz "001000"
+
+	T1_OP: .asciiz "$t1"
+	T1_BIN: .asciiz "001001"
+
+	T2_OP: .asciiz "$t2"
+	T2_BIN: .asciiz "001010"
+
+	T3_OP: .asciiz "$t3"
+	T3_BIN: .asciiz "001011"
+
+	T4_OP: .asciiz "$t4"
+	T4_BIN: .asciiz "001100"
+
+	T5_OP: .asciiz "$t5"
+	T5_BIN: .asciiz "001101"
+
+	T6_OP: .asciiz "$t6"
+	T6_BIN: .asciiz "001110"
+
+	T7_OP: .asciiz "$t7"
+	T7_BIN: .asciiz "001111"
+	
+	S0_OP: .asciiz "$s0"
+	S0_BIN: .asciiz "010000"
+
+	S1_OP: .asciiz "$s1"
+	S1_BIN: .asciiz "010001"
+
+	S2_OP: .asciiz "$s2"
+	S2_BIN: .asciiz "010010"
+
+	S3_OP: .asciiz "$s3"
+	S3_BIN: .asciiz "010011"
+
+	S4_OP: .asciiz "$s4"
+	S4_BIN: .asciiz "010100"
+
+	S5_OP: .asciiz "$s5"
+	S5_BIN: .asciiz "010101"
+
+	S6_OP: .asciiz "$s6"
+	S6_BIN: .asciiz "010110"
+
+	S7_OP: .asciiz "$s7"
+	S7_BIN: .asciiz "010111"
+
+	T8_OP: .asciiz "$t8"
+	T8_BIN: .asciiz "011000"
+
+	T9_OP: .asciiz "$t9"
+	T9_BIN: .asciiz "011001"
+
+	RA_OP: .asciiz "$ra"
+	RA_BIN: .asciiz "011111"
 
 .macro printString(%arg)
 	li $v0, 4 # service 4 is print string
