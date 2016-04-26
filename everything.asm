@@ -94,6 +94,15 @@
 
 	T9_OP: .asciiz "$t9"
 	T9_BIN: .asciiz "011001"
+	
+	GP_OP: .asciiz "$gp"
+	GP_BIN: .asciiz "011100"
+
+	SP_OP: .asciiz "$sp"
+	SP_BIN: .asciiz "011101"
+
+	FP_OP: .asciiz "$fp"
+	FP_BIN: .asciiz "011110"
 
 	RA_OP: .asciiz "$ra"
 	RA_BIN: .asciiz "011111"
@@ -235,6 +244,9 @@ handleComma: # arguments go here
 	handleComparison(T7_OP,T7_BIN)
 	handleComparison(T8_OP,T8_BIN)
 	handleComparison(T9_OP,T9_BIN)
+	handleComparison(GP_OP,GP_BIN)
+	handleComparison(SP_OP,SP_BIN)
+	handleComparison(FP_OP,FP_BIN)
 	handleComparison(RA_OP,RA_BIN)
 
 	la $t2, tempString # reset the counter and get the phrase
