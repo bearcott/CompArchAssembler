@@ -6,7 +6,7 @@
 
 # binary values are NOT ACCURATE, need to go to mips sheet and correct them.
 	ADD_OP: .asciiz "add"
-	ADD_BIN: .asciiz "000000,00000100000"
+	ADD_BIN: .asciiz "000000"
 
 	ADDI_OP: .asciiz "addi"
 	ADDI_BIN: .asciiz "001000"
@@ -15,10 +15,10 @@
 	ADDIU_BIN:.asciiz  "001001"
 	
 	ADDU_OP: .asciiz "addu"
-	ADDU_BIN: .asciiz "000000,00000100001"
+	ADDU_BIN: .asciiz "000000"
 	
 	AND_OP: .asciiz "and"
-	AND_BIN: .asciiz "000000,00000100100"
+	AND_BIN: .asciiz "000000"
 	
 	ANDI_OP: .asciiz "andi"
 	ANDI_BIN: .asciiz "001100"
@@ -36,7 +36,7 @@
 	JAL_BIN: .asciiz "000011"
 	
 	JR_OP: .asciiz "jr"
-	JR_BIN:.asciiz "000000,000000000000000001000"
+	JR_BIN:.asciiz "000000"
 	
 	LW_OP: .asciiz "lw"
 	LW_BIN:.asciiz "100011"
@@ -45,19 +45,19 @@
 	ORI_BIN:.asciiz "001101"
 	
 	SLL_OP: .asciiz "sll"
-	SLL_BIN:.asciiz "000000,000000"
+	SLL_BIN:.asciiz "000000"
 	
 	SRL_OP: .asciiz "srl"
-	SRL_BIN:.asciiz "000000,000010"
+	SRL_BIN:.asciiz "000000"
 	
 	SUB_OP: .asciiz "sub"
-	SUB_BIN:.asciiz "000000,00000100010"
+	SUB_BIN:.asciiz "000000"
 	
 	SW_OP: .asciiz "sw"
 	SW_BIN:.asciiz "101011"
 	
 	SYSCALL_OP: .asciiz "syscall"
-	SYCALL_BIN: .asciiz  "000000,001100 "
+	SYCALL_BIN: .asciiz  "000000"
 	
 	S0_OP: .asciiz "$s0"
 	S0_BIN: .asciiz "010000"
