@@ -221,6 +221,7 @@ handleSpace: # op codes go here
 handleComma: # arguments go here
 	addi $t0, $t0, 1 # increment byte from buffer to skip the comma
 	printString($t2)
+	handleComparison(ZERO_OP,ZERO_BIN)
 	handleComparison(S0_OP,S0_BIN)
 	handleComparison(S1_OP,S1_BIN)
 	handleComparison(S2_OP,S2_BIN)
