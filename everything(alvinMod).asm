@@ -6,67 +6,58 @@
 
 # binary values are NOT ACCURATE, need to go to mips sheet and correct them.
 	ADD_OP: .asciiz "add"
-	ADD_BIN: .asciiz "0000 00ss ssst tttt dddd d000 0010 0000"
+	ADD_BIN: .asciiz "000000,00000100000"
 
 	ADDI_OP: .asciiz "addi"
-	ADDI_BIN: .asciiz "0010 00ss ssst tttt iiii iiii iiii iiii"
+	ADDI_BIN: .asciiz "001000"
 	
 	ADDIU_OP: .asciiz "addiu"
-	ADDIU_BIN:.asciiz  "0010 01ss ssst tttt iiii iiii iiii iiii"
+	ADDIU_BIN:.asciiz  "001001"
 	
 	ADDU_OP: .asciiz "addu"
-	ADDU_BIN: .asciiz "0000 00ss ssst tttt dddd d000 0010 0001"
+	ADDU_BIN: .asciiz "000000,00000100001"
 	
 	AND_OP: .asciiz "and"
-	AND_BIN: .asciiz "0000 00ss ssst tttt dddd d000 0010 0100"
+	AND_BIN: .asciiz "000000,00000100100"
 	
 	ANDI_OP: .asciiz "andi"
-	ANDI_BIN: .asciiz "0011 00ss ssst tttt iiii iiii iiii iiii"
+	ANDI_BIN: .asciiz "001100"
 	
 	BEQ_OP: .asciiz "beq"
-	BEQ_BIN:.asciiz "0001 00ss ssst tttt iiii iiii iiii iiii"
+	BEQ_BIN:.asciiz "000100"
 	
 	BNE_OP: .asciiz "bne"
-	BNE_BIN: .asciiz "0001 01ss ssst tttt iiii iiii iiii iiii"
+	BNE_BIN: .asciiz "000101"
 	
 	J_OP: .asciiz "j"
-	J_BIN:.asciiz "0000 10ii iiii iiii iiii iiii iiii iiii"
+	J_BIN:.asciiz "000010"
 	
 	JAL_OP: .asciiz "jal"
-	JAL_BIN: .asciiz "0000 11ii iiii iiii iiii iiii iiii iiii"
+	JAL_BIN: .asciiz "000011"
 	
 	JR_OP: .asciiz "jr"
-	JR_BIN:.asciiz "0000 00ss sss0 0000 0000 0000 0000 1000"
+	JR_BIN:.asciiz "000000,000000000000000001000"
 	
 	LW_OP: .asciiz "lw"
-	LW_BIN:.asciiz "1000 11ss ssst tttt iiii iiii iiii iiii "
+	LW_BIN:.asciiz "100011"
 	
 	ORI_OP: .asciiz "ori"
-	ORI_BIN:.asciiz "0011 01ss ssst tttt iiii iiii iiii iiii"
+	ORI_BIN:.asciiz "001101"
 	
 	SLL_OP: .asciiz "sll"
-	SLL_BIN:.asciiz "0000 00ss ssst tttt dddd dhhh hh00 0000"
+	SLL_BIN:.asciiz "000000,000000"
 	
 	SRL_OP: .asciiz "srl"
-	SRL_BIN:.asciiz "0000 00-- ---t tttt dddd dhhh hh00 0010"
+	SRL_BIN:.asciiz "000000,000010"
 	
 	SUB_OP: .asciiz "sub"
-	SUB_BIN:.asciiz "0000 00ss ssst tttt dddd d000 0010 0010"
+	SUB_BIN:.asciiz "000000,00000100010"
 	
 	SW_OP: .asciiz "sw"
-	SW_BIN:.asciiz "1010 11ss ssst tttt iiii iiii iiii iiii"
+	SW_BIN:.asciiz "101011"
 	
 	SYSCALL_OP: .asciiz "syscall"
-	SYCALL_BIN: .asciiz  "0000 00-- ---- ---- ---- ---- --00 1100 "
-	
-	S0_OP: .asciiz "$s0"
-	S0_BIN: .asciiz "01030"
-
-	S1_OP: .asciiz "$s1"
-	S1_BIN: .asciiz "01500"
-
-	S2_OP: .asciiz "$s2"
-	S2_BIN: .asciiz "01510"
+	SYCALL_BIN: .asciiz  "000000,001100 "
 	
 	S0_OP: .asciiz "$s0"
 	S0_BIN: .asciiz "010000"
