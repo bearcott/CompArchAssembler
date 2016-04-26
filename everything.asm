@@ -293,7 +293,26 @@ handleSpace: # op codes go here
 
 	#brute force & hardcoded my nigga
 	#TODO: not use macro for something so bullshit
+	
 	handleOpComparison(ADD_OP,ADD_BIN,R_FORMAT)
+	handleOpComparison(ADDI_OP,ADDI_BIN,I_FORMAT)
+	handleOpComparison(ADDIU_OP,ADDIU_BIN,R_FORMAT)
+	handleOpComparison(ADDU_OP,ADDU_BIN,R_FORMAT)\
+	handleOpComparison(AND_OP,AND_BIN,R_FORMAT)
+	handleOpComparison(ANDI_OP,ANDI_BIN,I_FORMAT)
+	handleOpComparison(BEQ_OP,BEQ_BIN,I_FORMAT)
+	handleOpComparison(BNE_OP,BNE_BIN,I_FORMAT)
+	handleOpComparison(J_OP,J_BIN,J_FORMAT)
+	handleOpComparison(JAL_OP,JAL_BIN,J_FORMAT)
+	handleOpComparison(JR_OP,JR_BIN,R_FORMAT)
+	handleOpComparison(LW_OP,LW_BIN,I_FORMAT)
+	handleOpComparison(ORI_OP,ORI_BIN,I_FORMAT)
+	handleOpComparison(SLL_OP,SLL_BIN,R_FORMAT)
+	handleOpComparison(SRL_OP,SRL_BIN,R_FORMAT)
+	handleOpComparison(SUB_OP,SUB_BIN,R_FORMAT)
+	handleOpComparison(SW_OP,SW_BIN,I_FORMAT)
+	handleOpComparison(SYSCALL_OP,SYCALL_BIN,R_FORMAT)
+	
 	add $s4, $t4, $0 # load the resulting opcode into temp register
 	jal emptyPhraseLoop
 	j byteLoop
