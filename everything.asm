@@ -11,7 +11,9 @@
 	pitch: .byte 65
 
 	R_FORMAT: .asciiz "R"
-
+	I_FORMAT: .asciiz "I"
+	J_FORMAT: .asciiz "J"
+	
 # binary values are NOT ACCURATE, need to go to mips sheet and correct them.
 	ADD_OP: .asciiz "add"
 	ADD_BIN: .asciiz "000000"
