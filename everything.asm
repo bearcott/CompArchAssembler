@@ -3,17 +3,19 @@
 	fileName: .asciiz "test.asm" # filename for input
 	buffer: .space 1024
 	tempString: .space 20
-	
+
 	#For Sound
-	instrument: .byte 11
-	duration: .byte 500
-	volume: .byte 127
-	pitch: .byte 65
+	# instrument: .byte 11
+	# duration: .byte 200
+	# volume: .byte 127
+	# pitch: .byte 65
+
+	R_FORMAT: .asciiz "R"
 
 # binary values are NOT ACCURATE, need to go to mips sheet and correct them.
 	ADD_OP: .asciiz "add"
 	ADD_BIN: .asciiz "11141"
-	
+
 	ZERO_OP: .asciiz "$zero"
 	ZERO_BIN: .asciiz "000000"
 
@@ -61,7 +63,7 @@
 
 	T7_OP: .asciiz "$t7"
 	T7_BIN: .asciiz "001111"
-	
+
 	S0_OP: .asciiz "$s0"
 	S0_BIN: .asciiz "010000"
 
@@ -91,7 +93,7 @@
 
 	T9_OP: .asciiz "$t9"
 	T9_BIN: .asciiz "011001"
-	
+
 	GP_OP: .asciiz "$gp"
 	GP_BIN: .asciiz "011100"
 
@@ -104,11 +106,17 @@
 	RA_OP: .asciiz "$ra"
 	RA_BIN: .asciiz "011111"
 
-.macro printString(%arg)
+.macro printStringLn(%arg)
 	li $v0, 4 # service 4 is print string
 	add $a0, %arg, $zero  # load desired value into argument register $a0, using pseudo-op
 	syscall
 	printNewLine()
+.end_macro
+
+.macro printString(%arg)
+	li $v0, 4 # service 4 is print string
+	add $a0, %arg, $zero  # load desired value into argument register $a0, using pseudo-op
+	syscall
 .end_macro
 
 .macro printNewLine
@@ -128,6 +136,15 @@
 	la $t2, tempString
 	la $t3, %string
 	la $t4, %binary
+	add $t6, $0, $0
+	jal comparePhraseLoop
+.end_macro
+
+.macro handleOpComparison(%string, %binary, %format)
+	la $t2, tempString
+	la $t3, %string
+	la $t4, %binary
+	la $t6, %format
 	jal comparePhraseLoop
 .end_macro
 
@@ -154,14 +171,23 @@ loadByteLoop:
 	li $t3, 0 # reserved for holding address of temp phrases
 	li $t4, 0 # reserved for holding address of temp binary output
 	li $t5, 0 # reserved for second temp char
+	li $t6, 0 # reserved for holding address to format
+	li $t7, 0 # reserved for holding address to resulting opcode
+	li $t8, 0 # reserved for holding address to resulting format
+	li $t9, 0 # reserved for holding format type
 
 	li $s0, ' ' # load space char
 	li $s1, ',' # load space char
 	li $s2, '\n' # load newline char
 	li $s3, '\0' # null char (end of file)
 
+	add $s4, $0, $0 #reserved for holding address to final opcode
+	add $s5, $0, $0 #reserved for holding address to first arg
+	add $s6, $0, $0 #reserved for holding address to second arg
+	add $s7, $0, $0 #reserved for holding address to third arg
+
 	#print the buffer
-	printString($t0)
+	printStringLn($t0)
 
 byteLoop:
 	lb $t1, ($t0) # load current incremented byte from buffer
@@ -187,10 +213,17 @@ comparePhraseLoop: #handle each character
 	addi $t3, $t3, 1 # increment hardcoded phrase
 	j comparePhraseLoop
 comparePhraseElse:
+	la $t2, tempString # reset the counter again
 	jr $ra
 comparePhraseDone:
 	#perform ouput operation here
-	printString($t4)
+	add $t7, $t4, $0 # save the resulting argument
+	bne $t6, $0, addFormat
+	j addFormatDone
+addFormat:
+	add $t8, $t6, $0
+addFormatDone:
+	la $t2, tempString # reset the counter again
 	jr $ra
 
 emptyPhraseLoop:
@@ -200,24 +233,24 @@ emptyPhraseLoop:
 	addi $t2, $t2, 1 # increment through the phrase
 	j emptyPhraseLoop
 emptyPhraseDone:
+	la $t2, tempString # reset the counter
 	jr $ra
 
 handleSpace: # op codes go here
 	addi $t0, $t0, 1 # increment byte from buffer to skip the space
+	add $t7, $0, $0 # reset the result storage
 
 	#brute force & hardcoded my nigga
 	#TODO: not use macro for something so bullshit
-	handleComparison(ADD_OP,ADD_BIN)
-
-	la $t2, tempString # reset the counter and get the phrase
+	handleOpComparison(ADD_OP,ADD_BIN,R_FORMAT)
+	add $s4, $t4, $0 # load the resulting opcode into temp register
 	jal emptyPhraseLoop
-	la $t2, tempString # reset the counter again
 	j byteLoop
 
 
 handleComma: # arguments go here
 	addi $t0, $t0, 1 # increment byte from buffer to skip the comma
-	printString($t2)
+	add $t7, $0, $0 # reset the result storage
 	handleComparison(ZERO_OP,ZERO_BIN)
 	handleComparison(S0_OP,S0_BIN)
 	handleComparison(S1_OP,S1_BIN)
@@ -247,36 +280,101 @@ handleComma: # arguments go here
 	handleComparison(FP_OP,FP_BIN)
 	handleComparison(RA_OP,RA_BIN)
 
-	la $t2, tempString # reset the counter and get the phrase
+	beq $t7, $0, newlineLoadArgDone #if no results made, go to end
+	beq $s5, $0, commaLoadFirstArg
+	beq $s6, $0, commaLoadSecondArg
+	j commaLoadArgDone
+commaLoadFirstArg:
+	add $s5, $t7, $0 # put the resulting argument into arg storage
+	j commaLoadArgDone
+commaLoadSecondArg:
+	add $s6, $t7, $0 # put the resulting argument into arg storage
+	j commaLoadArgDone
+commaLoadArgDone:
 	jal emptyPhraseLoop
-	la $t2, tempString # reset the counter again
 	j byteLoop
 
 handleNewLine: # new instructions
 	addi $t0, $t0, 1 # increment byte from buffer to skip the newline
-	printString($t2)
+	add $t7, $0, $0 # reset the result storage
 
-	la $t2, tempString # reset the counter and get the phrase
+	handleComparison(ZERO_OP,ZERO_BIN)
+	handleComparison(S0_OP,S0_BIN)
+	handleComparison(S1_OP,S1_BIN)
+	handleComparison(S2_OP,S2_BIN)
+	handleComparison(S3_OP,S3_BIN)
+	handleComparison(S4_OP,S4_BIN)
+	handleComparison(S5_OP,S5_BIN)
+	handleComparison(S6_OP,S6_BIN)
+	handleComparison(S7_OP,S7_BIN)
+	handleComparison(AT_OP,AT_BIN)
+	handleComparison(V0_OP,V0_BIN)
+	handleComparison(V1_OP,V1_BIN)
+	handleComparison(A0_OP,A0_BIN)
+	handleComparison(A1_OP,A1_BIN)
+	handleComparison(A2_OP,A2_BIN)
+	handleComparison(T1_OP,T1_BIN)
+	handleComparison(T2_OP,T2_BIN)
+	handleComparison(T3_OP,T3_BIN)
+	handleComparison(T4_OP,T4_BIN)
+	handleComparison(T5_OP,T5_BIN)
+	handleComparison(T6_OP,T6_BIN)
+	handleComparison(T7_OP,T7_BIN)
+	handleComparison(T8_OP,T8_BIN)
+	handleComparison(T9_OP,T9_BIN)
+	handleComparison(GP_OP,GP_BIN)
+	handleComparison(SP_OP,SP_BIN)
+	handleComparison(FP_OP,FP_BIN)
+	handleComparison(RA_OP,RA_BIN)
+
+	beq $t7, $0, newlineLoadArgDone #if no results made, go to end
+	beq $s6, $0, newlineLoadSecondArg
+	beq $s7, $0, newlineLoadThirdArg
+	j newlineLoadArgDone
+newlineLoadSecondArg:
+	add $s6, $t7, $0 # put the resulting argument into arg storage
+	j newlineLoadArgDone
+newlineLoadThirdArg:
+	add $s7, $t7, $0 # put the resulting argument into arg storage
+	j newlineLoadArgDone
+newlineLoadArgDone:
+	#here we write the processing for the final binary instruction
+	la $t9, R_FORMAT
+	beq $t9, $t8, printR
+	j printDone
+printR:
+	printStringLn($s4)
+	printStringLn($s5)
+	printStringLn($s6)
+	printStringLn($s7)
+	printNewLine()
+printDone:
+	#reset all of the instruction stores
+	add $s4, $0, $0
+	add $s5, $0, $0
+	add $s6, $0, $0
+	add $s7, $0, $0
+	add $t6, $0, $0
+
 	jal emptyPhraseLoop
-	la $t2, tempString # reset the counter again
 	j byteLoop
 
 
 end: #Close the file and play a sound when done
 	#sound functionality
-	li $v0,33
-	addi $t2,$a0,12
-	
-	la $a0,pitch
-	lbu $a0 0($a0)
-	la $a1,duration
-	lbu $a1, 0($a1)
-	la $a2,instrument
-	lbu $a2 0($a2)
-	la $a3,volume
-	lbu $a3, 0($a3)
-	syscall	
-	
+	# li $v0,33
+	# addi $t2,$a0,12
+	#
+	# la $a0,pitch
+	# lbu $a0 0($a0)
+	# la $a1,duration
+	# lbu $a1, 0($a1)
+	# la $a2,instrument
+	# lbu $a2 0($a2)
+	# la $a3,volume
+	# lbu $a3, 0($a3)
+	# syscall
+
 	li $v0, 16 # system call for close file
 	move $a0, $s6 # file descriptor to close
 	syscall # close file
