@@ -5,10 +5,10 @@
 	tempString: .space 20
 
 	#For Sound
-	# instrument: .byte 11
-	# duration: .byte 200
-	# volume: .byte 127
-	# pitch: .byte 65
+	instrument: .byte 11
+	duration: .byte 500
+	volume: .byte 127
+	pitch: .byte 65
 
 	R_FORMAT: .asciiz "R"
 
@@ -344,9 +344,9 @@ newlineLoadArgDone:
 	j printDone
 printR:
 	printStringLn($s4)
-	printStringLn($s5)
 	printStringLn($s6)
 	printStringLn($s7)
+	printStringLn($s5)
 	printNewLine()
 printDone:
 	#reset all of the instruction stores
@@ -362,18 +362,18 @@ printDone:
 
 end: #Close the file and play a sound when done
 	#sound functionality
-	# li $v0,33
-	# addi $t2,$a0,12
-	#
-	# la $a0,pitch
-	# lbu $a0 0($a0)
-	# la $a1,duration
-	# lbu $a1, 0($a1)
-	# la $a2,instrument
-	# lbu $a2 0($a2)
-	# la $a3,volume
-	# lbu $a3, 0($a3)
-	# syscall
+	li $v0,33
+	addi $t2,$a0,12
+
+	la $a0,pitch
+	lbu $a0 0($a0)
+	la $a1,duration
+	lbu $a1, 0($a1)
+	la $a2,instrument
+	lbu $a2 0($a2)
+	la $a3,volume
+	lbu $a3, 0($a3)
+	syscall
 
 	li $v0, 16 # system call for close file
 	move $a0, $s6 # file descriptor to close
