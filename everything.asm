@@ -3,19 +3,16 @@
 	fileName: .asciiz "test.asm" # filename for input
 	buffer: .space 1024
 	tempString: .space 20
+	
+	#For Sound
+	instrument: .byte 11
+	duration: .byte 500
+	volume: .byte 127
+	pitch: .byte 65
 
 # binary values are NOT ACCURATE, need to go to mips sheet and correct them.
 	ADD_OP: .asciiz "add"
 	ADD_BIN: .asciiz "11141"
-
-	S0_OP: .asciiz "$s0"
-	S0_BIN: .asciiz "01030"
-
-	S1_OP: .asciiz "$s1"
-	S1_BIN: .asciiz "01500"
-
-	S2_OP: .asciiz "$s2"
-	S2_BIN: .asciiz "01510"
 	
 	ZERO_OP: .asciiz "$zero"
 	ZERO_BIN: .asciiz "000000"
@@ -265,7 +262,21 @@ handleNewLine: # new instructions
 	j byteLoop
 
 
-end: #Close the file
+end: #Close the file and play a sound when done
+	#sound functionality
+	li $v0,33
+	addi $t2,$a0,12
+	
+	la $a0,pitch
+	lbu $a0 0($a0)
+	la $a1,duration
+	lbu $a1, 0($a1)
+	la $a2,instrument
+	lbu $a2 0($a2)
+	la $a3,volume
+	lbu $a3, 0($a3)
+	syscall	
+	
 	li $v0, 16 # system call for close file
 	move $a0, $s6 # file descriptor to close
 	syscall # close file
