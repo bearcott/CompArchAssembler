@@ -297,7 +297,7 @@ handleSpace: # op codes go here
 	handleOpComparison(ADD_OP,ADD_BIN,R_FORMAT)
 	handleOpComparison(ADDI_OP,ADDI_BIN,I_FORMAT)
 	handleOpComparison(ADDIU_OP,ADDIU_BIN,R_FORMAT)
-	handleOpComparison(ADDU_OP,ADDU_BIN,R_FORMAT)\
+	handleOpComparison(ADDU_OP,ADDU_BIN,R_FORMAT)
 	handleOpComparison(AND_OP,AND_BIN,R_FORMAT)
 	handleOpComparison(ANDI_OP,ANDI_BIN,I_FORMAT)
 	handleOpComparison(BEQ_OP,BEQ_BIN,I_FORMAT)
