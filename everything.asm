@@ -14,7 +14,58 @@
 
 # binary values are NOT ACCURATE, need to go to mips sheet and correct them.
 	ADD_OP: .asciiz "add"
-	ADD_BIN: .asciiz "11141"
+	ADD_BIN: .asciiz "000000"
+
+	ADDI_OP: .asciiz "addi"
+	ADDI_BIN: .asciiz "001000"
+	
+	ADDIU_OP: .asciiz "addiu"
+	ADDIU_BIN:.asciiz  "001001"
+	
+	ADDU_OP: .asciiz "addu"
+	ADDU_BIN: .asciiz "000000"
+	
+	AND_OP: .asciiz "and"
+	AND_BIN: .asciiz "000000"
+	
+	ANDI_OP: .asciiz "andi"
+	ANDI_BIN: .asciiz "001100"
+	
+	BEQ_OP: .asciiz "beq"
+	BEQ_BIN:.asciiz "000100"
+	
+	BNE_OP: .asciiz "bne"
+	BNE_BIN: .asciiz "000101"
+	
+	J_OP: .asciiz "j"
+	J_BIN:.asciiz "000010"
+	
+	JAL_OP: .asciiz "jal"
+	JAL_BIN: .asciiz "000011"
+	
+	JR_OP: .asciiz "jr"
+	JR_BIN:.asciiz "000000"
+	
+	LW_OP: .asciiz "lw"
+	LW_BIN:.asciiz "100011"
+	
+	ORI_OP: .asciiz "ori"
+	ORI_BIN:.asciiz "001101"
+	
+	SLL_OP: .asciiz "sll"
+	SLL_BIN:.asciiz "000000"
+	
+	SRL_OP: .asciiz "srl"
+	SRL_BIN:.asciiz "000000"
+	
+	SUB_OP: .asciiz "sub"
+	SUB_BIN:.asciiz "000000"
+	
+	SW_OP: .asciiz "sw"
+	SW_BIN:.asciiz "101011"
+	
+	SYSCALL_OP: .asciiz "syscall"
+	SYCALL_BIN: .asciiz  "000000"
 
 	ZERO_OP: .asciiz "$zero"
 	ZERO_BIN: .asciiz "000000"
